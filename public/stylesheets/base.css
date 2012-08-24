@@ -1,0 +1,15 @@
+body {
+  color: #333;
+  font-size: 16px;
+  line-height: 22px;
+  font-family: Ubuntu, Helvetica, sans-serif;
+}
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

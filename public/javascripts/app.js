@@ -1,6 +1,9 @@
 require.config({
   paths: {
-    jquery: 'lib/jquery-1.8.0'
+    jquery: 'lib/jquery-1.8.0',
+    underscore: 'lib/underscore',
+    backbone: 'lib/backbone',
+    mustache: 'lib/mustache'
   },
   shim: {
     jquery: {

@@ -1,0 +1,17 @@
+.songThumb .imageCol {
+  float: left;
+  width: 120px;
+}
+.songThumb .imageCol img {
+  max-height: 120px;
+  max-width: 120px;
+}
+.songThumb .infoCol {
+  margin-left: 130px;
+  padding-top: 6px;
+}
+.songThumb .infoCol .title {
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 6px;
+}
