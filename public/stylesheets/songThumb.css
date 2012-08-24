@@ -1,3 +1,4 @@
+/* Song thumb */
 .songThumb .imageCol {
   float: left;
   width: 120px;
@@ -14,4 +15,9 @@
   font-weight: bold;
   font-size: 20px;
   margin-bottom: 6px;
+}
+
+/* Song thumb list */
+.songThumbList li {
+  margin-bottom: 10px;
 }

@@ -1,7 +1,2 @@
-exports.songs = function (req, res) {
-  res.render('songs');
-};
-
-exports.player = function (req, res) {
-  res.render('player');
-};
+exports.web = require('./http.js');
+exports.api = require('./api.js');

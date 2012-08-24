@@ -5,8 +5,11 @@ html
       block title
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
+
     block content
     | <script>
+
     block jsinit
     | </script>
+
     script(src='/javascripts/require.js', data-main='/javascripts/app.js')

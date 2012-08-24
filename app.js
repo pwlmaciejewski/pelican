@@ -26,8 +26,13 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-app.get('/songs', routes.songs);
-app.get('/player', routes.player);
+// Web routes
+app.get('/songs', routes.web.songs);
+app.get('/player', routes.web.player);
+
+// API Routes
+app.get('/api/songs', routes.api.getSongs);
+app.get('/api/songs/:id', routes.api.getSong);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
