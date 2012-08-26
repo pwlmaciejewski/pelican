@@ -3,7 +3,6 @@ Backbone.setDomLibrary(require('jquery'));
 
 var Song = Backbone.Model.extend({
   defaults: {
-    id: 0,
     url: '',
     ytId: '',
     title: '',
