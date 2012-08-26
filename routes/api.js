@@ -1,17 +1,12 @@
+var request = require('request');
+
 // Songs model
 var Song = require('../models/song.js');
 var SongCollection = require('../models/songCollection.js');
-var songs = new SongCollection([{
-  id: 0,
-  url: 'http://google.pl',
-  title: 'Kasabian',
-  thumbUrl: 'http:/xxx.pl'
-}, {
-  id: 1,
-  url: 'http://www.youtube.com/watch?v=AyggY_R3jU8',
-  title: 'Final countdowna',
-  thumbUrl: 'http://dupa.pl'
-}]);
+var songs = new SongCollection();
+
+// Export songs out (why not?)
+exports.songs = songs;
 
 // Standard API error factory
 var apiError = function (msg) {
@@ -36,4 +31,8 @@ exports.getSong = function (req, res) {
   }
 
   res.send(song.toJSON());
+};
+
+exports.postSong = function (req, res) {
+
 };

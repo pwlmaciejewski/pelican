@@ -16,6 +16,7 @@
   "devDependencies": {
     "supervisor": "~0.4.1",
     "nodeunit": "~0.7.4",
-    "jshint": "~0.8.0"
+    "jshint": "~0.8.0",
+    "sandboxed-module": "~0.1.3"
   }
 }
