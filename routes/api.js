@@ -37,5 +37,22 @@ exports.getSong = function (req, res) {
 
 // POST /songs/
 exports.postSong = function (req, res) {
-  
+  var url = req.body.url;
+
+  if (url.search('youtube') !== -1) {
+    songs.add({ url: url });
+  } else {
+    songs.add({ ytId: url });
+  }
+
+  songs.fetch({
+    success: function (model, results) {
+      var r = {
+        ok: true,
+        song: results[0]
+      };
+
+      res.send(JSON.stringify(r));
+    }
+  });
 };

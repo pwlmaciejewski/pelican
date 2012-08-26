@@ -41,13 +41,31 @@ module.exports = {
       test.done();
     },
 
-    fetch: function (test) {
+    fetchSuccess: function (test) {
       this.songs.fetch({
-        success: function () {
+        success: function (model, results) {
+          test.equal(this.songs, model, 'Model should be a first argument');
+          test.equal(results[0], this.songs.at(0), 'Results should be an array of added elements');
           test.equal(this.songs.at(0).get('title'), 'Epic sax guy 10 hours');
-          test.equal(this.songs.at(1).get('title'), 'Amelie Soundtrack - Yann Tiersen (Original)');
+          test.equal(this.songs.at(1).get('title'), 'Amelie Soundtrack - Yann Tiersen (Original)'); 
           test.done();
         }.bind(this)
+      });
+    },
+
+    fetchError: function (test) {
+      this.songs.add({ ytId: 'xxx' });
+      this.songs.fetch({
+        success: function (model, results) {
+          test.equal(results.length, 2, 'Results should be an array of valid models');
+        },
+        error: function (model, results) {
+          test.equal(results[0].get('ytId'), 'xxx', 'Invalid models should be results of error');
+        },
+        complete: function (model) {
+          test.equal(model.length, 2, 'Invalid models should be rejected from collection');
+          test.done();
+        }
       });
     }
   }

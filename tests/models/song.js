@@ -33,7 +33,7 @@ module.exports = {
       success: function () {
         test.equal(song.get('url'), 'https://www.youtube.com/watch?v=KD1NTfTF21I&feature=youtube_gdata', 'Url should be valid');
         test.equal(song.get('title'), 'Totally Enormous Extinct Dinosaurs - "Garden": SXSW 2011 Showcasing Artist', 'Title should be valid');
-        test.equal(song.get('thumb'), 'http://i.ytimg.com/vi/KD1NTfTF21I/default.jpg', 'Thumbnail should be valid');
+        test.equal(song.get('thumbnail'), 'http://i.ytimg.com/vi/KD1NTfTF21I/default.jpg', 'Thumbnail should be valid');
         test.done();    
       }
     });
@@ -43,8 +43,8 @@ module.exports = {
   invalidVideo: function (test) {
     var song = new Song({ ytId: 'KD1NTfTF21' });
     song.fetch({
-      error: function () {
-        test.ok(true);
+      error: function (model) {
+        test.equal(model, song, 'First argument should be a model');
         test.done();
       }
     });
