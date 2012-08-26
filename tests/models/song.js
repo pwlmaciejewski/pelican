@@ -21,21 +21,27 @@ module.exports = {
     test.done();
   },
 
-  fetchInfo: function (test) {
+  fetch: function (test) {
     var song = new Song({ ytId: 'KD1NTfTF21I' });
-    song.fetchInfo(function () {
-      test.equal(song.get('url'), 'https://www.youtube.com/watch?v=KD1NTfTF21I&feature=youtube_gdata', 'Url should be valid');
-      test.equal(song.get('title'), 'Totally Enormous Extinct Dinosaurs - "Garden": SXSW 2011 Showcasing Artist', 'Title should be valid');
-      test.equal(song.get('thumb'), 'http://i.ytimg.com/vi/KD1NTfTF21I/default.jpg', 'Thumbnail should be valid');
-      test.done();
-    });   
+    test.equal(song.url(), 'https://gdata.youtube.com/feeds/api/videos/KD1NTfTF21I?v=2&alt=json');
+    song.fetch({
+      complete: function () {
+        test.equal(song.get('url'), 'https://www.youtube.com/watch?v=KD1NTfTF21I&feature=youtube_gdata', 'Url should be valid');
+        test.equal(song.get('title'), 'Totally Enormous Extinct Dinosaurs - "Garden": SXSW 2011 Showcasing Artist', 'Title should be valid');
+        test.equal(song.get('thumb'), 'http://i.ytimg.com/vi/KD1NTfTF21I/default.jpg', 'Thumbnail should be valid');
+        test.done();    
+      }
+    });
+
   },
 
   invalidVideo: function (test) {
     var song = new Song({ ytId: 'KD1NTfTF21' });
-    song.fetchInfo(function (err) {
-      test.ok(err, 'Song with invalid ID should return error on fetch');
-      test.done();
-    });   
+    song.fetch({
+      error: function () {
+        test.ok(true);
+        test.done();
+      }
+    });
   }
 };

@@ -19,10 +19,12 @@ var apiError = function (msg) {
   return JSON.stringify(err);
 };
 
+// GET /songs/
 exports.getSongs = function (req, res) {
   res.send(songs.toJSON());
 };
 
+// GET /songs/:id 
 exports.getSong = function (req, res) {
   var song = songs.get(req.params.id);
 
@@ -33,6 +35,7 @@ exports.getSong = function (req, res) {
   res.send(song.toJSON());
 };
 
+// POST /songs/
 exports.postSong = function (req, res) {
-
+  
 };
