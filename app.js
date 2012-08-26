@@ -33,6 +33,7 @@ app.get('/player', routes.web.player);
 // API Routes
 app.get('/api/songs', routes.api.getSongs);
 app.get('/api/songs/:id', routes.api.getSong);
+app.post('/api/songs', routes.api.postSong);
 
 http.createServer(app).listen(app.get('port'), function () {
   console.log("Express server listening on port " + app.get('port'));
