@@ -1,12 +1,8 @@
-
-/**
- * Module dependencies.
- */
-
 var express = require('express'), 
     routes = require('./routes'), 
     http = require('http'), 
-    path = require('path');
+    path = require('path'),
+    flash = require('connect-flash');
 
 var app = express();
 
@@ -17,6 +13,9 @@ app.configure(function () {
   app.use(express.favicon());
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
+  app.use(express.cookieParser());
+  app.use(express.session({ secret: 'sasadffd'}));
+  app.use(flash());
   app.use(express.methodOverride());
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
@@ -29,6 +28,8 @@ app.configure('development', function () {
 // Web routes
 app.get('/songs', routes.web.songs);
 app.get('/player', routes.web.player);
+app.get('/add', routes.web.add);
+app.post('/add', routes.web.postAdd);
 
 // API Routes
 app.get('/api/songs', routes.api.getSongs);

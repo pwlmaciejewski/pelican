@@ -1,0 +1,13 @@
+extends layout
+
+block title
+  |Add a song
+
+block content
+
+  - if (info)
+    p= info
+
+  form(method="post", action="/add")
+    input(name="url")
+    input(type="submit", value="Dodaj")

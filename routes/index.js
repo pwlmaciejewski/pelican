@@ -1,2 +1,2 @@
-exports.web = require('./http.js');
+exports.web = require('./web.js');
 exports.api = require('./api.js');

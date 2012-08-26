@@ -1,5 +1,3 @@
-var request = require('request');
-
 // Songs model
 var Song = require('../models/song.js');
 var SongCollection = require('../models/songCollection.js');
