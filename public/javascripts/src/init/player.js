@@ -1,11 +1,35 @@
-define(['jquery', 'plugin/jquery.tubeplayer'], function ($) {
+define(['jquery', 'socketio', 'plugin/jquery.tubeplayer'], function ($, io) {
+	var socket = io.connect('localhost');
+	var player = $('#player');
 
-	$('#player').tubeplayer({
+	var init = function () {
+		console.log('xxx');
+
+		// Song change
+		socket.on('songChange', function (song) {
+			console.log(song);
+			if (!song) {
+				player.tubeplayer('play', '');
+			} else {
+				player.tubeplayer('play', song.ytId);
+			}
+		});
+		
+		// Ask what is we should play right now
+		socket.emit('whatsPlaying?');	
+	}
+
+	// Initialize player
+	player.tubeplayer({
+		initialVideo: '',
 		width: 600,
 		height: 450,
 		showControls: true,
 		modestbranding: false,
-		autoPlay: true
+		autoPlay: true,
+		onErrorNotFound: init,
+		onErrorInvalidParameter: init,
+		onErrorNotEmbeddable: init
 	});
 
 });

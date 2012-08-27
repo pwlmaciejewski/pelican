@@ -88,6 +88,17 @@ module.exports = {
           });
         }
       });
+    },
+
+    uninitializedSong: function (test) {
+      api.songs.add({ ytId: '8ZcmTl_1ER8' });
+      api.getNowPlaying({}, {
+        send: function (txt) {
+          var json = JSON.parse(txt);
+          test.ok(!json.song, 'There should not be actually playing song');
+          test.done();
+        }
+      });
     }
   }
 };

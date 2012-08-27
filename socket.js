@@ -1,19 +1,28 @@
-module.exports = function (io, model) {
+module.exports = function (io, songs) {
 	io.sockets.on('connection', function (socket) {
 		socket.on('fetch', function () {
-			socket.emit('reset', model.toJSON());
+			socket.emit('reset', songs.toJSON());
+		});
+
+		socket.on('whatsPlaying?', function () {
+			if (songs.length) {
+				console.log('bedzie szlo');
+				socket.emit('songChange', songs.first().toJSON());				
+			} else {
+				socket.emit('songChange', false);
+			}
 		});
 	});
 
-	model.on('add', function (song) {
+	songs.on('add', function (song) {
 		io.sockets.emit('add', song);
 	});
 
-	model.on('remove', function (song) {
+	songs.on('remove', function (song) {
 		io.sockets.emit('remove', song);
 	});
 
-	model.on('change', function (song) {
+	songs.on('change', function (song) {
 		io.sockets.emit('change', song);
 	});
 };
