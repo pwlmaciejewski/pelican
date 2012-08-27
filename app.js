@@ -1,11 +1,10 @@
-var express = require('express'), 
-    routes = require('./routes'), 
-    http = require('http'), 
-    path = require('path'),
-    flash = require('connect-flash');
-
+var express = require('express');
+var routes = require('./routes'); 
+var path = require('path');
+var flash = require('connect-flash');
 var app = express();
 
+// Configuration
 app.configure(function () {
   app.set('port', process.env.PORT || 3000);
   app.set('views', __dirname + '/views');
@@ -31,11 +30,12 @@ app.get('/player', routes.web.player);
 app.get('/add', routes.web.add);
 app.post('/add', routes.web.postAdd);
 
-// API Routes
+// REST Routes
 app.get('/api/songs', routes.api.getSongs);
 app.get('/api/songs/:id', routes.api.getSong);
 app.post('/api/songs', routes.api.postSong);
 
-http.createServer(app).listen(app.get('port'), function () {
-  console.log("Express server listening on port " + app.get('port'));
-});
+// Expose songs
+app.set('songs', routes.api.songs);
+
+module.exports = app;

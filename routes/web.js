@@ -24,7 +24,6 @@ var web = {
 
     api.postSong(req, {
       send: function (txt) {
-        console.log(txt);
         res.redirect('/songs');        
       }
     });

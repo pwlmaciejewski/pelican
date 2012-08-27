@@ -1,19 +1,18 @@
 define([
   'jquery',
   'model/songThumbCollection', 
-  'view/songThumbCollection'
-], function () {
-  var $ = arguments[0];
-  var SongThumbCollectionModel = arguments[1];
-  var SongThumbCollectionView = arguments[2];
-
-  var thumbCollectionModel = new SongThumbCollectionModel();
-
-  var thumbView = new SongThumbCollectionView({
-    el: $('.playlist'),
-    collection: thumbCollectionModel
+  'view/songThumbCollection',
+  'socketio'
+], function ($, SongsModel, SongsView, io) {
+  var model = new SongsModel([], {
+    socket: io.connect('localhost')
   });
 
-  thumbView.render();
-  thumbCollectionModel.fetch();
+  var view = new SongsView({
+    el: $('.playlist'),
+    collection: model
+  });
+
+  view.render();
+  model.fetch();
 });

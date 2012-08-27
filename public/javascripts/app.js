@@ -3,7 +3,8 @@ require.config({
     jquery: 'lib/jquery-1.8.0',
     underscore: 'lib/underscore',
     backbone: 'lib/backbone',
-    mustache: 'lib/mustache'
+    mustache: 'lib/mustache',
+    socketio: '/socket.io/socket.io.js'
   },
   shim: {
     jquery: {
@@ -15,6 +16,9 @@ require.config({
     backbone: {
       deps: ['jquery', 'underscore'],
       exports: 'Backbone'
+    },
+    socketio: {
+      exports: 'io'
     }
   }
 });
@@ -23,6 +27,6 @@ require.config({
   baseUrl: '/javascripts/src'
 });
 
-if (init) {
+if (window['init']) {
   require(['init/' + init]);
 }

@@ -9,11 +9,17 @@ var Song = Backbone.Model.extend({
     thumbnail: ''
   },
 
-  initialize: function () {
-    if (!this.get('ytId')) {
-      this.set('ytId', Song.ytId(this.get('url')));      
-    }
-  },
+  initialize: (function () {
+    var id = 0;
+    return function () {
+      this.set('id', id, { silent: true });
+      id += 1;
+
+      if (!this.get('ytId')) {
+        this.set('ytId', Song.ytId(this.get('url')));      
+      }
+    };
+  })(),
 
   url: function () {
     return 'https://gdata.youtube.com/feeds/api/videos/' + this.get('ytId') + '?v=2&alt=json';

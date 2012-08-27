@@ -41,6 +41,11 @@ module.exports = {
       test.done();
     },
 
+    id: function (test) {
+      test.ok(this.songs.first().get('id'), 'There should be id of a song');
+      test.done();
+    },
+
     fetchSuccess: function (test) {
       this.songs.fetch({
         success: function (model, results) {

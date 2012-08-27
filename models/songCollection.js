@@ -4,6 +4,7 @@ var async = require('async');
 
 module.exports = Backbone.Collection.extend({
   model: Song,
+
   fetch: function (options) {
     options.success = options.success || function () {};
     options.error = options.error || function () {};
