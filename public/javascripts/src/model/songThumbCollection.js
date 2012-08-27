@@ -15,22 +15,18 @@ define(['backbone', 'model/songThumb'], function (Backbone, SongThumb) {
 
     initializeSocket: function () {
       this.socket.on('add', function (model) {
-        console.log('*** ADD ***', model);
         this.add(model);
       }.bind(this));
 
       this.socket.on('remove', function (model) {
-        console.log('*** REMOVE ***', model);
         this.remove(model);
       }.bind(this));
 
       this.socket.on('reset', function (models) {
-        console.log('*** RESET ***', models);
         this.reset(models);  
       }.bind(this));
 
       this.socket.on('change', function (model) {
-        console.log('*** CHANGE ***', model);
         this.get(model.id).set(model);
       }.bind(this));
     },

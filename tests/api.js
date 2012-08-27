@@ -11,6 +11,10 @@ var api = sandbox.require('../routes/api.js', {
                 // Epic sax guy
                 if (options.url === 'https://gdata.youtube.com/feeds/api/videos/8ZcmTl_1ER8?v=2&alt=json') {
                   options.success(JSON.parse(fs.readFileSync('fixtures/youtubeResponses/saxguy.json').toString()));
+                }
+                // Amelie
+                else if (options.url === 'https://gdata.youtube.com/feeds/api/videos/WYGFNjEL7Jw?v=2&alt=json') {
+                  options.success(JSON.parse(fs.readFileSync('fixtures/youtubeResponses/amelie.json').toString()));
                 } 
                 else {
                   options.error({
@@ -57,5 +61,33 @@ module.exports = {
         test.done();
       }
     });
+  },
+
+  getNowPlaying: {
+    emptyQueue: function (test) {
+      api.getNowPlaying({}, {
+        send: function (txt) {
+          var json = JSON.parse(txt);
+          test.equal(json.song, false, 'Now playing for empty queue should be "false"');
+          test.done();
+        }
+      });
+    },
+
+    playing: function (test) {
+      api.songs.add({ ytId: '8ZcmTl_1ER8' });
+      api.songs.add({ ytId: 'WYGFNjEL7Jw' });
+      api.songs.fetch({
+        complete: function () {
+          api.getNowPlaying({}, {
+            send: function (txt) {
+              var json = JSON.parse(txt);
+              test.equal(json.song.ytId, '8ZcmTl_1ER8');
+              test.done();
+            }
+          });
+        }
+      });
+    }
   }
 };

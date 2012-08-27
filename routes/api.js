@@ -54,3 +54,13 @@ exports.postSong = function (req, res) {
     }
   });
 };
+
+// GET /nowPlaying/
+exports.getNowPlaying = function (req, res) {
+  if (!songs.length) {
+    res.send(JSON.stringify({ song: false }));
+    return;
+  }
+
+  res.send(JSON.stringify({ song: songs.first().toJSON() }));
+};

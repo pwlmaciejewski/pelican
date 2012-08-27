@@ -34,6 +34,7 @@ app.post('/add', routes.web.postAdd);
 app.get('/api/songs', routes.api.getSongs);
 app.get('/api/songs/:id', routes.api.getSong);
 app.post('/api/songs', routes.api.postSong);
+app.get('/api/nowPlaying', routes.api.getNowPlaying);
 
 // Expose songs
 app.set('songs', routes.api.songs);
