@@ -19,7 +19,8 @@ require.config({
     },
     socketio: {
       exports: 'io'
-    }
+    },
+    'plugin/jquery.tubeplayer': ['jquery']
   }
 });
 
