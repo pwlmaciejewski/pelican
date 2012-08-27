@@ -22,8 +22,12 @@ var web = {
       return;
     }
 
-    api.postSong(req, res);
-    res.redirect('/songs');
+    api.postSong(req, {
+      send: function (txt) {
+        console.log(txt);
+        res.redirect('/songs');        
+      }
+    });
   }
 };
 

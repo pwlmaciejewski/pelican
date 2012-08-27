@@ -62,8 +62,11 @@ module.exports = {
         error: function (model, results) {
           test.equal(results[0].get('ytId'), 'xxx', 'Invalid models should be results of error');
         },
-        complete: function (model) {
+        complete: function (model, results, valid, invalid) {
           test.equal(model.length, 2, 'Invalid models should be rejected from collection');
+          test.equal(results.length, 3, 'Results should have all models');
+          test.equal(valid.length, 2, 'Valid array should contain valid models');
+          test.equal(invalid.length, 1, 'Invalid array should contain invalid models');
           test.done();
         }
       });

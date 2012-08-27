@@ -27,16 +27,35 @@ var api = sandbox.require('../routes/api.js', {
   } 
 });
 
-exports.postSong = function (test) {
-  var req = { body: { url: 'https://www.youtube.com/watch?v=8ZcmTl_1ER8' } };
+module.exports = {
+  setUp: function (callback) {
+    api.songs.reset();
+    callback();
+  },
 
-  api.postSong(req, {
-    send: function (txt) {
-      var json = JSON.parse(txt);
-      test.ok(json.ok);
-      test.equal(api.songs.length, 1);
-      test.equal(json.song.title, 'Epic sax guy 10 hours');
-      test.done();
-    }
-  });
+  postSong: function (test) {
+    var req = { body: { url: 'https://www.youtube.com/watch?v=8ZcmTl_1ER8' } };
+
+    api.postSong(req, {
+      send: function (txt) {
+        var json = JSON.parse(txt);
+        test.ok(json.ok);
+        test.equal(api.songs.length, 1);
+        test.equal(json.song.title, 'Epic sax guy 10 hours');
+        test.done();
+      }
+    });
+  },
+
+  postInvalidSong: function (test) {
+    var req = { body: { url: 'http://youtube.com/watch?v=xxx' } };
+    api.postSong(req, {
+      send: function (txt) {
+        var json = JSON.parse(txt);
+        test.ok(!json.ok);
+        test.equal(api.songs.length, 0, 'Songs should not be added into collection');
+        test.done();
+      }
+    });
+  }
 };

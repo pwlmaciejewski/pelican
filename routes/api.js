@@ -44,9 +44,9 @@ exports.postSong = function (req, res) {
   }
 
   songs.fetch({
-    success: function (model, results) {
+    complete: function (model, results, valid, invalid) {
       var r = {
-        ok: true,
+        ok: !!valid.length,
         song: results[0]
       };
 

@@ -42,7 +42,7 @@ module.exports = Backbone.Collection.extend({
       options.success(this, valid);
 
       // Send complete
-      options.complete(this, results);
+      options.complete(this, results, valid, invalid);
     }.bind(this));
   }
 });
