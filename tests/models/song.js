@@ -48,5 +48,16 @@ module.exports = {
         test.done();
       }
     });
+  },
+
+  isFetched: function (test) {
+    var song = new Song({ ytId: 'KD1NTfTF21I' });
+    test.ok(!song.isFetched());
+    song.fetch({
+      success: function () {
+        test.ok(song.isFetched());
+        test.done();        
+      }
+    });
   }
 };

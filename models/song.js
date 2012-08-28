@@ -31,6 +31,10 @@ var Song = Backbone.Model.extend({
       title: res.entry.title.$t,
       thumbnail: res.entry.media$group.media$thumbnail[0].url
     };
+  },
+
+  isFetched: function () {
+    return this.get('title') !== '';
   }
 }, {
   ytId: function (url) {
