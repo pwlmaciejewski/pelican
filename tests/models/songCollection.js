@@ -1,9 +1,12 @@
 var sandbox = require('sandboxed-module');
 var fs = require('fs');
+var Backbone = require('backbone');
 var SongCollection = sandbox.require('../../models/songCollection.js', {
   requires: {
+    backbone: Backbone,
     './song.js': sandbox.require('../../models/song.js', {
       requires: {
+        backbone: Backbone,
         jquery: {
           ajax: function (options) {
             // Amelie
@@ -41,12 +44,33 @@ module.exports = {
       test.done();
     },
 
-    id: function (test) {
-      test.ok(this.songs.first().get('id'), 'There should be id of a song');
+    reset: function (test) {
+      this.songs.reset();
+      test.equal(this.songs.unfetchedModels.length, 0, 'After reset unfetchedModels should be empty');
       test.done();
     },
 
-    add: function (test) {
+    add: {
+      beforeFetch: function (test) {
+        this.songs.reset();
+        this.songs.add({ ytId: '8ZcmTl_1ER8' });
+        test.equal(this.songs.length, 0, 'There should not be any songs in collection before fetch()');
+        test.done();
+      },
+
+      afterFetch: function (test) {
+        this.songs.reset();
+        this.songs.add({ ytId: '8ZcmTl_1ER8' });
+        this.songs.fetch({
+          complete: function (collection) {
+            test.equal(collection.length, 1, 'There should be one model in collection after fetch()');
+            test.done();
+          }
+        });        
+      }
+    },
+
+    addEvent: function (test) {
       var addEvent = false;
       
       this.songs.on('add', function () {
@@ -61,8 +85,8 @@ module.exports = {
     fetch: {
       success: function (test) {
         this.songs.fetch({
-          success: function (model, results) {
-            test.equal(this.songs, model, 'Model should be a first argument');
+          success: function (collection, results) {
+            test.equal(this.songs, collection, 'Collection should be a first argument');
             test.equal(results[0], this.songs.at(0), 'Results should be an array of added elements');
             test.equal(this.songs.at(0).get('title'), 'Epic sax guy 10 hours');
             test.equal(this.songs.at(1).get('title'), 'Amelie Soundtrack - Yann Tiersen (Original)'); 

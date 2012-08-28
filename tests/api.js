@@ -1,11 +1,14 @@
 var sandbox = require('sandboxed-module');
 var fs = require('fs');
+var Backbone = require('backbone');
 var api = sandbox.require('../routes/api.js', {
   requires: {
     '../models/songCollection.js': sandbox.require('../models/songCollection.js', {
       requires: {
+        backbone: Backbone,
         './song.js': sandbox.require('../models/song.js', {
           requires: {
+            backbone: Backbone,
             jquery: {
               ajax: function (options) {
                 // Epic sax guy

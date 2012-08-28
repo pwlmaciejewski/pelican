@@ -1,17 +1,48 @@
 var Backbone = require('backbone');
 var Song = require('./song.js');
 var async = require('async');
+var _ = require('underscore');
+
+var Collection = Backbone.Collection.extend({ model: Song });
 
 module.exports = Backbone.Collection.extend({
   model: Song,
 
+  initialize: function () {
+    this.unfetchedModels = new Collection();
+  },
+
+  // Adding new, unfetched model don't trigger `add` event.
+  // Also, if model is unfetched it isn't added to models,
+  // it appears in `unfetchedModels`. 
+  add: function (models, options) {
+    models = _.isArray(models) ? models.slice() : [models];
+
+    // Fetched and unfetched models
+    var fetched = _(models).filter(function (model) {
+      model = model instanceof Backbone.Model ? model : new this.model(model);
+      return !model.isFetched();
+    }, this);
+    var unfetched = _(models).difference(fetched);
+
+    this.unfetchedModels.add(fetched);
+    return Backbone.Collection.prototype.add.call(this, unfetched, options);
+  },
+
+  // Need to reset `this.unfetechedModels` by my self.
+  reset: function () {
+    this.unfetchedModels.reset();
+    return Backbone.Collection.prototype.reset.apply(this, arguments);
+  },
+
+  // It fetches models from `unfetchedModels`.
   fetch: function (options) {
     options.success = options.success || function () {};
     options.error = options.error || function () {};
     options.complete = options.complete || function () {};
 
-    // Run functions in parallel
-    async.parallel(this.map(function (song) {
+    // Fetch each unfetched song (in parallel)
+    async.parallel(this.unfetchedModels.map(function (song) {
       return function (callback) {
         song.fetch({
           success: function (model, res) {
@@ -23,16 +54,18 @@ module.exports = Backbone.Collection.extend({
         });
       };
     }, this), function (err, results) {
-      var valid = results.filter(function (result) { 
-        return result.get('title') !== ''; 
+      // Valid models
+      var valid = _(results).filter(function (model) {
+        return model.isFetched();
       });
 
-      var invalid = results.filter(function (result) { 
-        return result.get('title') === ''; 
-      });
+      // Invalid models
+      var invalid = _(results).difference(valid);
 
-      // Remove invalid models from collection
-      this.remove(invalid);
+      this.add(valid);
+
+      // Clear `unfetchedModels`
+      this.unfetchedModels.reset();
 
       // Send error
       if (err) {

@@ -59,5 +59,12 @@ module.exports = {
         test.done();        
       }
     });
+  },
+
+  id: function (test) {
+    var s1 = new Song({ ytId: 'xxx' });
+    var s2 = new Song({ ytId: 'xxx' });
+    test.ok(s1.get('id') !== s2.get('id'), 'Songs should have unque id\'s');
+    test.done();
   }
 };
