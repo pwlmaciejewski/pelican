@@ -43,5 +43,16 @@ module.exports = {
     this.playlist.next();
     test.ok(nextEvent, 'Next event should be emited');
     test.done();
+  },
+
+  reset: function (test) {
+    var nextEvent = false;
+    this.playlist.on('next', function () {
+      nextEvent = true;
+    });
+
+    this.playlist.reset();
+    test.ok(nextEvent);
+    test.done();
   }
 };

@@ -14,6 +14,12 @@ var Playlist = SongCollection.extend({
 		this.remove(this.first());
 		this.trigger('next');
 		return this;
+	},
+
+	reset: function () {
+		var res = SongCollection.prototype.reset.apply(this, arguments);
+		this.trigger('next');
+		return res;
 	}
 });
 
