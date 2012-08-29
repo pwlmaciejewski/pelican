@@ -115,5 +115,17 @@ module.exports = {
       }
 
     } 
+  },
+
+  nowPlaying: {
+    setUp: function (callback) {
+      this.songs = new SongCollection();
+      callback();
+    },
+
+    emptyCollection: function (test) {
+      test.equal(this.songs.nowPlaying(), false);
+      test.done();
+    }
   }
 };

@@ -6,7 +6,6 @@ module.exports = function (io, songs) {
 
 		socket.on('whatsPlaying?', function () {
 			if (songs.length) {
-				console.log('bedzie szlo');
 				socket.emit('songChange', songs.first().toJSON());				
 			} else {
 				socket.emit('songChange', false);

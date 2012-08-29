@@ -13,7 +13,11 @@ define(['backbone'], function (Backbone) {
 			}
 		},
 
-		initializeSocket: function () {},
+		initializeSocket: function () {
+      this.socket.on('songChange', function (song) {
+        this.set('song', song);
+      }.bind(this));
+    },
 
 		fetch: function () {
       if (!this.socket) {
