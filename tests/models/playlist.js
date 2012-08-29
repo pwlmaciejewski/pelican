@@ -32,5 +32,16 @@ module.exports = {
     this.playlist.next();
     test.equal(this.playlist.nowPlaying().get('title'), "Amelie Soundtrack - Yann Tiersen (Original)");
     test.done();
+  },
+
+  nextEvent: function (test) {
+    var nextEvent = false;
+    this.playlist.on('next', function () {
+      nextEvent = true;
+    });
+
+    this.playlist.next();
+    test.ok(nextEvent, 'Next event should be emited');
+    test.done();
   }
 };

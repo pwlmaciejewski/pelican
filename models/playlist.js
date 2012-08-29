@@ -12,6 +12,7 @@ var Playlist = SongCollection.extend({
 
 	next: function () {
 		this.remove(this.first());
+		this.trigger('next');
 		return this;
 	}
 });
