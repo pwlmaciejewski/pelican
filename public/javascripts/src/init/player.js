@@ -19,6 +19,8 @@ define(['jquery', 'socketio', 'plugin/jquery.tubeplayer'], function ($, io) {
 		socket.emit('whatsPlaying?');	
 	}
 
+	$.tubeplayer.defaults.afterReady = init;
+
 	// Initialize player
 	player.tubeplayer({
 		initialVideo: '',
@@ -26,10 +28,8 @@ define(['jquery', 'socketio', 'plugin/jquery.tubeplayer'], function ($, io) {
 		height: 450,
 		showControls: true,
 		modestbranding: false,
-		autoPlay: true,
-		onErrorNotFound: init,
-		onErrorInvalidParameter: init,
-		onErrorNotEmbeddable: init
+		autoPlay: true
 	});
+
 
 });
