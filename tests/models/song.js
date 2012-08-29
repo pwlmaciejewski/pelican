@@ -1,23 +1,4 @@
-var sandbox = require('sandboxed-module');
-var fs = require('fs');
-
-var Song = sandbox.require('../../models/song.js', {
-  requires: { 
-    jquery:  {
-      ajax: function (options) {
-        // TEED - Garden
-        if (options.url === 'https://gdata.youtube.com/feeds/api/videos/KD1NTfTF21I?v=2&alt=json') {
-          options.success(JSON.parse(fs.readFileSync('fixtures/youtubeResponses/teed.garden.json').toString()));
-        } else {
-          options.error({
-            status: 400,
-            responseTest: '<errors xmlns=\'http://schemas.google.com/g/2005\'><error><domain>GData</domain><code>InvalidRequestUriException</code><internalReason>Invalid id</internalReason></error></errors>'
-          });
-        }        
-      }
-    }
-  }
-});
+var Song = require('../mocks/song');
 
 module.exports = {
   ytId: function (test) {
