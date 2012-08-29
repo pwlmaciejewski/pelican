@@ -12,13 +12,24 @@ var Playlist = SongCollection.extend({
 
 	next: function () {
 		this.remove(this.first());
-		this.trigger('next');
+		this.trigger('next', this.nowPlaying());
 		return this;
 	},
 
 	reset: function () {
 		var res = SongCollection.prototype.reset.apply(this, arguments);
-		this.trigger('next');
+		this.trigger('next', this.nowPlaying());
+		return res;
+	},
+
+	add: function () {
+		var oldLength = this.length;
+		var res = SongCollection.prototype.add.apply(this, arguments);
+
+		if (oldLength === 0 && this.length > 0) {
+			this.trigger('next', this.nowPlaying());
+		}
+
 		return res;
 	}
 });

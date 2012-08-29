@@ -1,7 +1,7 @@
 // Songs model
 var Song = require('../models/song.js');
-var SongCollection = require('../models/songCollection.js');
-var songs = new SongCollection();
+var Playlist = require('../models/playlist.js');
+var songs = new Playlist();
 
 // Export songs out (why not?)
 exports.songs = songs;
@@ -57,10 +57,6 @@ exports.postSong = function (req, res) {
 
 // GET /nowPlaying/
 exports.getNowPlaying = function (req, res) {
-  if (!songs.length) {
-    res.send(JSON.stringify({ song: false }));
-    return;
-  }
-
-  res.send(JSON.stringify({ song: songs.first().toJSON() }));
+  var nowPlaying = songs.nowPlaying();
+  res.send(JSON.stringify({ song: (nowPlaying ? nowPlaying.toJSON() : false) }));
 };

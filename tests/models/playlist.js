@@ -35,14 +35,12 @@ module.exports = {
   },
 
   nextEvent: function (test) {
-    var nextEvent = false;
-    this.playlist.on('next', function () {
-      nextEvent = true;
+    this.playlist.on('next', function (song) {
+      test.equal(song.get('title'), "Amelie Soundtrack - Yann Tiersen (Original)");
+      test.done();
     });
 
     this.playlist.next();
-    test.ok(nextEvent, 'Next event should be emited');
-    test.done();
   },
 
   reset: function (test) {
@@ -53,6 +51,19 @@ module.exports = {
 
     this.playlist.reset();
     test.ok(nextEvent);
+    test.equal(this.playlist.nowPlaying(), false);
     test.done();
+  },
+
+  nextOnAddToEmptyPlaylist: function (test) {
+    var playlist = new Playlist();
+    
+    playlist.on('next', function () {
+      test.ok(true, 'Next event should be triggered when adding to empty playlist');
+      test.done();
+    });
+
+    playlist.add({ ytId: 'KD1NTfTF21I' });
+    playlist.fetch();
   }
 };

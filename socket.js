@@ -24,4 +24,8 @@ module.exports = function (io, songs) {
 	songs.on('change', function (song) {
 		io.sockets.emit('change', song);
 	});
+
+	songs.on('next', function (song) {
+		io.sockets.emit('songChange', song);
+	});
 };

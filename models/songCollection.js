@@ -37,6 +37,7 @@ module.exports = Backbone.Collection.extend({
 
   // It fetches models from `unfetchedModels`.
   fetch: function (options) {
+    options = options || {};
     options.success = options.success || function () {};
     options.error = options.error || function () {};
     options.complete = options.complete || function () {};

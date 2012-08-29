@@ -1,16 +1,17 @@
 define(['backbone', 'plugin/jquery.tubeplayer'], function (Backbone) {
 	return Backbone.View.extend({
-    ready: false,
-
-    initialize: function () {
+    initialize: function (options) {
       $.tubeplayer.defaults.afterReady = function () {
-        this.read = true;
+        this.ready();
       }.bind(this);
 
-      this.model.on('change:song', function () {
-        console.log('change song', arguments);
-        // player.tubeplayer('play', song.ytId);
-      });
+      this.ready = options.ready || function () {};
+
+      this.model.on('change:song', function (song) {
+        var song = this.model.get('song');
+        console.log(song);
+        this.$el.tubeplayer('play', song ? song.ytId : '');
+      }, this);
     },
 
     render: function () {
