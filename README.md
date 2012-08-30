@@ -14,9 +14,11 @@ Pelican starts as a daemon:
 
 	pelican start
 
-To stop the server:
+## Usage
 
-	pelican stop
+After starting a daemon, server admin can launch YouTube player by entering `http://localhost:3000/player`.
+
+Clients can add new songs to queue in `http://[pelican server address]:3000/songs`.
 
 ## Tests
 
