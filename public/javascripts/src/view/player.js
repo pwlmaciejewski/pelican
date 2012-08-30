@@ -19,6 +19,10 @@ define(['backbone', 'plugin/jquery.tubeplayer'], function (Backbone) {
       this.model.next();
     },
 
+    error: function () {
+      this.model.next();
+    },
+
     initializePlayer: function () {
       this.$el.tubeplayer({
         initialVideo: 'xxx',
@@ -27,7 +31,8 @@ define(['backbone', 'plugin/jquery.tubeplayer'], function (Backbone) {
         showControls: true,
         modestbranding: false,
         autoPlay: true,
-        onPlayerEnded: this.end.bind(this)
+        onPlayerEnded: this.end.bind(this),
+        onErrorNotEmbeddable: this.error.bind(this)
       });
     },
 
