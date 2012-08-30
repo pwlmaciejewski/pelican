@@ -1,7 +1,12 @@
 {
+  "author": "Paweł Maciejewski <fragphace@gmail.com> (http://fragphace.pl)",
   "name": "pelican",
+  "description": "Real-time YouTube queue",
   "version": "0.0.1",
-  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/fragphace/pelican.git"
+  },
   "scripts": {
     "start": "node_modules/supervisor/lib/cli-wrapper.js server",
     "pretest": "node_modules/jshint/bin/hint app.js models/* routes/* tests/*",
