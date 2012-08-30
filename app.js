@@ -26,7 +26,13 @@ app.configure('development', function () {
 
 // Web routes
 app.get('/songs', routes.web.songs);
-app.get('/player', routes.web.player);
+app.get('/player', function (req, res, next) {
+  if (req.connection.remoteAddress !== '127.0.0.1') {
+    res.send('');
+  } else {
+    next();
+  }
+}, routes.web.player);
 app.get('/add', routes.web.add);
 app.post('/add', routes.web.postAdd);
 
