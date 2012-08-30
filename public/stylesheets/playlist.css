@@ -1,0 +1,23 @@
+.playlist {
+  margin: 20px auto 0 auto;
+  width: 800px;
+}
+.playlist > .actions {
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+.playlist > .actions .add {
+  float: right;
+}
+.playlist .songs .songThumb {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 15px 15px;
+}
+.playlist .songs > li {
+  margin-top: 10px;
+}
+.playlist .songs > li:first-child {
+  margin-top: 0;
+};

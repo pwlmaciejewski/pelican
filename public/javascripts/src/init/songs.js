@@ -9,7 +9,7 @@ define([
   });
 
   var view = new SongsView({
-    el: $('.playlist'),
+    el: $('.playlist .songs'),
     collection: model
   });
 

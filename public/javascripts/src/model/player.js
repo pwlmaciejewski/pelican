@@ -25,7 +25,7 @@ define(['backbone'], function (Backbone) {
 
 		fetch: function () {
       if (!this.socket) {
-        return Backbone.Model.fetch.apply(this, arguments);
+        return Backbone.Model.prototype.fetch.apply(this, arguments);
       }
 
       this.socket.emit('whatsPlaying?');

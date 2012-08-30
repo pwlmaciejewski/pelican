@@ -16,8 +16,8 @@ app.configure(function () {
   app.use(express.session({ secret: 'sasadffd'}));
   app.use(flash());
   app.use(express.methodOverride());
-  app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
+  app.use(app.router);
 });
 
 app.configure('development', function () {
@@ -41,6 +41,11 @@ app.get('/api/songs', routes.api.getSongs);
 app.get('/api/songs/:id', routes.api.getSong);
 app.post('/api/songs', routes.api.postSong);
 app.get('/api/nowPlaying', routes.api.getNowPlaying);
+
+// Default route
+app.get('*', function (req, res) {
+  res.redirect('/songs');
+});
 
 // Expose songs
 app.set('songs', routes.api.songs);

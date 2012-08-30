@@ -7,4 +7,7 @@ block jsinit
   |init = 'songs'
 
 block content
-  div(class="playlist")
+  .playlist
+    .actions
+      a.add(href="/add") Add new song
+    ul(class="songs")

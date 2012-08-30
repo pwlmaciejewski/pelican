@@ -1,4 +1,7 @@
 /* Song thumb */
+.songThumb {
+  display: block;
+}
 .songThumb .imageCol {
   float: left;
   width: 120px;

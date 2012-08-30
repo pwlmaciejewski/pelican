@@ -5,9 +5,10 @@ block title
 
 block content
 
-  - if (info)
-    p= info
+  .addSongContainer
 
-  form(method="post", action="/add")
-    input(name="url")
-    input(type="submit", value="Dodaj")
+    h1.title Add new song to queue
+
+    form(method="post", action="/add")
+      input(id="url", name="url", autofocus="autofocus")      
+      input(type="submit", value="Add")

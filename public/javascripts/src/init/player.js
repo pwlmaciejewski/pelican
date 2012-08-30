@@ -8,7 +8,9 @@ define(['socketio', 'model/player', 'view/player'], function (io, PlayerModel, P
 		model: model
 	});
 
-	view.on('ready', model.fetch);
+	view.on('ready', function () {
+    model.fetch();
+  });
 
 	view.render();
 });

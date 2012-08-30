@@ -22,8 +22,8 @@ define(['backbone', 'plugin/jquery.tubeplayer'], function (Backbone) {
     initializePlayer: function () {
       this.$el.tubeplayer({
         initialVideo: 'xxx',
-        width: 600,
-        height: 450,
+        width: 860,
+        height: 500,
         showControls: true,
         modestbranding: false,
         autoPlay: true,
