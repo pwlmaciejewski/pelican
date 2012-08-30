@@ -6,13 +6,13 @@ YouTube web server with real-time queue.
 
 ## Installation
 
-  npm install pelican
+	npm install pelican
 
 ## Start
 
-  npm start
+	npm start
 
 
 ## Tests
 
-  npm test
+	npm test
