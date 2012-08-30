@@ -11,6 +11,10 @@ module.exports = function (io, songs) {
 				socket.emit('songChange', false);
 			}
 		});
+
+		socket.on('songNext', function () {
+			songs.next();
+		});
 	});
 
 	songs.on('add', function (song) {

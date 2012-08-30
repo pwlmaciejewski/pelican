@@ -5,13 +5,10 @@ define(['socketio', 'model/player', 'view/player'], function (io, PlayerModel, P
 
 	var view = new PlayerView({
 		el: $('#player'),
-		model: model,
-		ready: function () {
-			model.fetch();
-		}
+		model: model
 	});
 
-	console.log(view);
+	view.on('ready', model.fetch);
 
 	view.render();
 });

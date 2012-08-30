@@ -19,6 +19,10 @@ define(['backbone'], function (Backbone) {
       }.bind(this));
     },
 
+    next: function () {
+      this.socket.emit('songNext');
+    },
+
 		fetch: function () {
       if (!this.socket) {
         return Backbone.Model.fetch.apply(this, arguments);
