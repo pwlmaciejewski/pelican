@@ -11,7 +11,7 @@ var foreverPath = '../node_modules/forever/bin/forever ';
 var action = argv._[0];
 if (action === 'start') {
   
-  exec(foreverPath + 'start ../server.js', [], function (err, stdout, stderr) {
+  exec(foreverPath + 'start -o out.log -e err.log ../server.js', [], function (err, stdout, stderr) {
     console.log(stdout);
   });
 

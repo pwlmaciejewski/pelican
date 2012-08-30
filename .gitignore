@@ -1,1 +1,4 @@
 node_modules
+bin/err.log
+bin/out.log
+npm-debug.log
