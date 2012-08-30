@@ -2,7 +2,7 @@
   "author": "Paweł Maciejewski <fragphace@gmail.com> (http://fragphace.pl)",
   "name": "pelican",
   "description": "Real-time YouTube queue",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "repository": {
     "type": "git",
     "url": "git://github.com/fragphace/pelican.git"
@@ -20,10 +20,10 @@
     "jquery": "~1.7.3",
     "async": "~0.1.22",
     "connect-flash": "~0.1.0",
-    "socket.io": "~0.9.10"
+    "socket.io": "~0.9.10",
+    "supervisor": "~0.4.1"
   },
   "devDependencies": {
-    "supervisor": "~0.4.1",
     "nodeunit": "~0.7.4",
     "jshint": "~0.8.0",
     "sandboxed-module": "~0.1.3"
