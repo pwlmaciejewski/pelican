@@ -1,6 +1,6 @@
 define(['socketio', 'model/player', 'view/player'], function (io, PlayerModel, PlayerView) {
 	var model = new PlayerModel({}, {
-		socket: io.connect('localhost')
+		socket: io.connect()
 	});
 
 	var view = new PlayerView({

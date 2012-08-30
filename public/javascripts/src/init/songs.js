@@ -5,7 +5,7 @@ define([
   'socketio'
 ], function ($, SongsModel, SongsView, io) {
   var model = new SongsModel([], {
-    socket: io.connect('localhost')
+    socket: io.connect()
   });
 
   var view = new SongsView({
