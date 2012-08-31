@@ -1,7 +1,7 @@
 var sandbox = require('sandboxed-module');
 var api = sandbox.require('../routes/api.js', {
   requires: {
-    '../models/songCollection.js': require('./mocks/songCollection.js')
+    '../models/playlist.js': require('./mocks/playlist.js')
   } 
 });
 
