@@ -3,7 +3,7 @@ var Backbone = require('backbone');
 
 module.exports = sandbox.require('../../models/song.js', {
   requires: { 
-    jquery:  require('../mocks/jqueryAjax.js'),
+    request:  require('../mocks/request.js'),
     backbone: Backbone
   }
 });

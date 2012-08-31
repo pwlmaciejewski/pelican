@@ -1,5 +1,6 @@
 var Backbone = require('backbone');
-Backbone.setDomLibrary(require('jquery'));
+var request = require('request');
+var _ = require('underscore');
 
 var Song = Backbone.Model.extend({
   defaults: {
@@ -31,6 +32,25 @@ var Song = Backbone.Model.extend({
       title: res.entry.title.$t,
       thumbnail: res.entry.media$group.media$thumbnail[0].url
     };
+  },
+
+  fetch: function (options) {
+    options = options ? _.clone(options) : {};
+    options.success = options.success || function () {};
+    options.error = options.error || function () {};
+    var model = this;
+
+    request({
+      uri: this.url()
+    }, function (err, res, body) {
+      if (res.statusCode !== 200) {
+        options.error(model);
+        return;
+      }
+
+      model.set(model.set(model.parse(JSON.parse(body))));
+      options.success(model);
+    });
   },
 
   isFetched: function () {
