@@ -4,7 +4,7 @@ define(['socketio', 'model/player', 'view/player'], function (io, PlayerModel, P
 	});
 
 	var view = new PlayerView({
-		el: $('#player'),
+		el: $('.playerContainer'),
 		model: model
 	});
 

@@ -1,4 +1,4 @@
-define(['backbone', 'plugin/jquery.tubeplayer'], function (Backbone) {
+define(['backbone', 'mustache', 'text!/templates/player.tmpl', 'plugin/jquery.tubeplayer'], function (Backbone, Mustache, tmpl) {
 	return Backbone.View.extend({
     initialize: function (options) {
       this.ready = false;
@@ -23,8 +23,26 @@ define(['backbone', 'plugin/jquery.tubeplayer'], function (Backbone) {
       this.model.next();
     },
 
-    initializePlayer: function () {
-      this.$el.tubeplayer({
+    update: function () {
+      var song = this.model.get('song');
+      song = song || {
+        title: '',
+        ytId: 'xxx'
+      };
+
+      this.$el.find('.yt').tubeplayer('play', song.ytId);
+      this.$el.find('.title').html(song.title);
+    },
+
+    render: function () {
+      // If view is renered, update it
+      if (this.ready) {
+        this.update();
+        return;
+      }
+
+      this.$el.html(Mustache.render(tmpl, {}));
+      this.$el.find('.yt').tubeplayer({
         initialVideo: 'xxx',
         width: 860,
         height: 500,
@@ -34,16 +52,6 @@ define(['backbone', 'plugin/jquery.tubeplayer'], function (Backbone) {
         onPlayerEnded: this.end.bind(this),
         onErrorNotEmbeddable: this.error.bind(this)
       });
-    },
-
-    render: function () {
-      if (!this.ready) {
-        this.initializePlayer();
-        return;
-      }
-
-      var song = this.model.get('song');
-      this.$el.tubeplayer('play', song ? song.ytId : 'xxx');
     }
 	});
 });

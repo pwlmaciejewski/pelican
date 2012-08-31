@@ -1,4 +1,8 @@
-#player {
+.playerContainer {
   margin: 20px auto 0 auto;
   width: 860px;
+}
+.player .title {
+  font-weight: bold;
+  margin-bottom: 6px;
 }
