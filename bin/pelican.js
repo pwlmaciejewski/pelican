@@ -12,7 +12,13 @@ var forever = (function () {
     callback = callback || function () {};
 
     exec(path + cmd, [], function (err, stdout, stderr) {
+      if (err) {
+        throw err;
+      }
+
       process.stdout.write(stdout);
+      process.stderr.write(stderr);
+      
       callback();
     });
   };  
@@ -80,7 +86,7 @@ var actions = {
   start: {
     description: 'Runs new instance of the server',
     run: function () {
-      forever('start -o out.log -e err.log -m 100 ../server.js');
+      forever('start -m 100 ../server.js');
     }
   },
 

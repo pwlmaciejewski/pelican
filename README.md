@@ -12,7 +12,7 @@ YouTube web server with real-time queue.
 
 Pelican starts as a daemon:
 
-	sudo pelican start
+	pelican start
 
 ## Usage
 
