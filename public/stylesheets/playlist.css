@@ -20,4 +20,9 @@
 }
 .playlist .songs > li:first-child {
   margin-top: 0;
-};
+}
+.playlist .songs .empty {
+  color: #999;
+  font-style: italic;
+  text-align: center;
+}
