@@ -6,13 +6,13 @@ YouTube web server with real-time queue.
 
 ## Installation
 
-	npm install -g pelican
+	sudo npm install -g pelican
 
 ## Start
 
 Pelican starts as a daemon:
 
-	pelican start
+	sudo pelican start
 
 ## Usage
 
