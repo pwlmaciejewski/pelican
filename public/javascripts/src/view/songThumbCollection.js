@@ -11,50 +11,48 @@ define(['underscore', 'backbone', 'view/songThumb'], function (_, Backbone, Song
 
       this.collection.on('add', function (model) {
         this.add(model);
-        this.render();
       }, this);
 
       this.collection.on('remove', function (model) {
         this.remove(model);
-        this.render();
       }, this);
-
-      this.reset();
     },
 
     reset: function () {
+      this.$el.html('');
       this.collection.each(this.add.bind(this));
-      this.render();
     },
 
     add: function (model) {
+      // Create new view and push it to `this.views`
       var view = new SongThumb({
         model: model,
         tagName: 'li'
       });
       this.views.push(view);
+
+      // Make view appear 
+      this.$el.append(view.el);
+      view.render();
+      view.$el.hide();
+      view.$el.fadeIn();
     },
 
     remove: function (model) {
+      // Remove view from collection
       this.views = _(this.views).reject(function (view) {
-        if (view.model === model) {
-          console.log(view);
+        var reject = view.model === model; 
+
+        if (reject) {
+          view.$el.fadeOut(function () {
+            view.remove();
+          });
         }
-        return view.model === model;
+
+        return reject;
       });
     },
     
-    views: [],
-
-    render: function () {
-      this.$el.html('');
-      console.log(this.views);
-      this.views.forEach(function (view) {
-        this.$el.append(view.el);
-        view.render();
-      }.bind(this));
-
-      return this;
-    }
+    views: []
   });
 });
