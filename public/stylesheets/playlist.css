@@ -21,6 +21,10 @@
 .playlist .songs > li:first-child {
   margin-top: 0;
 }
+.playlist .songs > li:first-child .songThumb {
+  border: 0;
+  box-shadow: 0 0 5px #4183C4;  
+}
 .playlist .songs .empty {
   color: #999;
   font-style: italic;
