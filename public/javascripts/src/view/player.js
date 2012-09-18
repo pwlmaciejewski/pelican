@@ -5,6 +5,7 @@ define(['backbone', 'mustache', 'text!/templates/player.tmpl', 'plugin/jquery.tu
 
       // When player is initialized
       $.tubeplayer.defaults.afterReady = function () {
+        this.$yt.hide();
         this.ready = true;
         this.trigger('ready');
       }.bind(this);
@@ -25,14 +26,21 @@ define(['backbone', 'mustache', 'text!/templates/player.tmpl', 'plugin/jquery.tu
 
     update: function () {
       var song = this.model.get('song');
-      song = song || {
-        title: '',
-        ytId: 'xxx'
-      };
+      var title = this.$el.find('.title');
 
-      this.$el.find('.yt').tubeplayer('play', song.ytId);
-      this.$el.find('.title').html(song.title);
+      if (song) {
+        this.$yt.show();
+        this.$yt.tubeplayer('play', song.ytId);
+        title.html(song.title);
+      } else {
+        this.$yt.tubeplayer('stop');
+        this.$yt.hide();
+        title.html('');
+      }
     },
+
+    // YouTube player node
+    $yt: null,
 
     render: function () {
       // If view is renered, update it
@@ -40,15 +48,17 @@ define(['backbone', 'mustache', 'text!/templates/player.tmpl', 'plugin/jquery.tu
         this.update();
         return;
       }
+      this.ready = true;
 
       this.$el.html(Mustache.render(tmpl, {}));
-      this.$el.find('.yt').tubeplayer({
-        initialVideo: 'xxx',
+      this.$yt = this.$el.find('.yt');
+      this.$yt.tubeplayer({
+        allowFullscreen: true,
+        iframed: false,
         width: 860,
         height: 500,
         showControls: true,
         modestbranding: false,
-        autoPlay: true,
         onPlayerEnded: this.end.bind(this),
         onErrorNotEmbeddable: this.error.bind(this)
       });
