@@ -97,6 +97,13 @@ var actions = {
     }
   },
 
+  restart: {
+    description: 'Restarts all pelicans',
+    run: function () {
+      forever('restartall');
+    }
+  },
+
   list: {
     description: 'Lists all running pelican servers', 
     run: function () {
