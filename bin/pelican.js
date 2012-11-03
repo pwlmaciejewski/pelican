@@ -3,15 +3,16 @@ process.chdir(__dirname);
 
 // Dependencies
 var optimist = require('optimist');
+var path = require('path');
 
 // Forever curry
 var forever = (function () {
-  var path = '../node_modules/forever/bin/forever ';
+  var foreverPath = path.resolve('../node_modules/forever/bin/forever');
   var exec = require('child_process').exec;
   return function (cmd, callback) {
     callback = callback || function () {};
 
-    exec(path + cmd, [], function (err, stdout, stderr) {
+    exec('node ' + foreverPath + ' ' + cmd, [], function (err, stdout, stderr) {
       if (err) {
         throw err;
       }
