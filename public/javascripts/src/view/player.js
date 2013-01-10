@@ -54,7 +54,7 @@ define(['backbone', 'mustache', 'text!/templates/player.tmpl', 'plugin/jquery.tu
       this.$yt = this.$el.find('.yt');
       this.$yt.tubeplayer({
         allowFullscreen: true,
-        iframed: false,
+        iframed: true,
         width: 860,
         height: 500,
         showControls: true,
