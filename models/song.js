@@ -48,7 +48,7 @@ var Song = Backbone.Model.extend({
         return;
       }
 
-      model.set(model.set(model.parse(JSON.parse(body))));
+      model.set(model.parse(JSON.parse(body)));
       options.success(model);
     });
   },
