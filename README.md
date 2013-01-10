@@ -14,7 +14,7 @@ $ pelican start
 Pelican started at port 3000
 Always remember that Pelican is based on trust and compassion
 
-Player:	 http://192.168.1.7:3000/player
+Player:	 http://localhost:3000/player
 Songs:	 http://192.168.1.7:3000/songs
 ```
 
