@@ -4,6 +4,8 @@ process.chdir(__dirname);
 // Dependencies
 var optimist = require('optimist');
 var path = require('path');
+var clc = require('cli-color');
+var os = require('os');
 
 // Forever curry
 var forever = (function () {
@@ -15,12 +17,8 @@ var forever = (function () {
     exec('node ' + foreverPath + ' ' + cmd, [], function (err, stdout, stderr) {
       if (err) {
         throw err;
-      }
-
-      process.stdout.write(stdout);
-      process.stderr.write(stderr);
-      
-      callback();
+      }      
+      callback(stdout, stderr);
     });
   };  
 })();
@@ -87,7 +85,22 @@ var actions = {
   start: {
     description: 'Runs new instance of the server',
     run: function () {
-      forever('start -m 100 ../server.js');
+      forever('start -m 100 ../server.js', function () {
+        var interfaces = os.networkInterfaces();
+        var ip = Object.keys(interfaces).reduce(function (acc, key) {
+          return acc ? acc : interfaces[key].reduce(function (acc, val) {
+            return val.family === 'IPv4' && val.internal === false ? val.address : acc;
+          }, null);
+        }, null);
+
+        var log = '';
+        log += clc.greenBright.bold('Pelican started at port 3000') + '\n';
+        log += clc.blueBright('Always remember that Pelican is based on ');
+        log += clc.blueBright.bold('trust') + clc.blueBright(' and ') + clc.blueBright.bold('compassion') + '\n\n';
+        log += 'Player:\t http://localhost:3000/player' + '\n';
+        log += 'Songs:\t http://' + ip + ':3000/songs';
+        console.log(log);
+      });
     }
   },
 
@@ -108,7 +121,9 @@ var actions = {
   list: {
     description: 'Lists all running pelican servers', 
     run: function () {
-      forever('list');
+      forever('list', function (stdout) {
+        console.log(stdout);
+      });
     }
   },
 
