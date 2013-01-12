@@ -1,30 +1,30 @@
-var api = require('./api');
+var api, web;
 
-var web = {
-  songs: function (req, res) {
-    res.render('songs');
+api = require('./api');
+
+web = {
+  songs: function(req, res) {
+    return res.render('songs');
   },
-
-  player: function (req, res) {
-    res.render('player');
+  player: function(req, res) {
+    return res.render('player');
   },
-
-  add: function (req, res) {
-    res.render('add', { info: req.flash('info') });
+  add: function(req, res) {
+    return res.render('add', {
+      info: req.flash('info')
+    });
   },
-
-  postAdd: function (req, res) {
-    var url = req.body.url;
-
+  postAdd: function(req, res) {
+    var url;
+    url = req.body.url;
     if (!url) {
       req.flash('info', 'Invalid input');
       web.add(req, res);
       return;
     }
-
-    api.postSong(req, {
-      send: function (txt) {
-        res.redirect('/songs');        
+    return api.postSong(req, {
+      send: function(txt) {
+        return res.redirect('/songs');
       }
     });
   }

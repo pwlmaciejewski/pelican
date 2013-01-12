@@ -1,62 +1,65 @@
-// Songs model
-var Song = require('../models/song.js');
-var Playlist = require('../models/playlist.js');
-var songs = new Playlist();
+var Playlist, Song, apiError, songs;
 
-// Export songs out (why not?)
+Song = require('../models/song.js');
+
+Playlist = require('../models/playlist.js');
+
+songs = new Playlist();
+
 exports.songs = songs;
 
-// Standard API error factory
-var apiError = function (msg) {
-  var err = { error: true };
-  
+apiError = function(msg) {
+  var err;
+  err = {
+    error: true
+  };
   if (msg) {
     err.message = msg;
   }
-
   return JSON.stringify(err);
 };
 
-// GET /songs/
-exports.getSongs = function (req, res) {
-  res.send(songs.toJSON());
+exports.getSongs = function(req, res) {
+  return res.send(songs.toJSON());
 };
 
-// GET /songs/:id 
-exports.getSong = function (req, res) {
-  var song = songs.get(req.params.id);
-
+exports.getSong = function(req, res) {
+  var song;
+  song = songs.get(req.params.id);
   if (!song) {
-    res.send(404, apiError('Invalid song id'));    
+    res.send(404, apiError('Invalid song id'));
   }
-
-  res.send(song.toJSON());
+  return res.send(song.toJSON());
 };
 
-// POST /songs/
-exports.postSong = function (req, res) {
-  var url = req.body.url;
-
+exports.postSong = function(req, res) {
+  var url;
+  url = req.body.url;
   if (url.search('youtube') !== -1) {
-    songs.add({ url: url });
+    songs.add({
+      url: url
+    });
   } else {
-    songs.add({ ytId: url });
+    songs.add({
+      ytId: url
+    });
   }
-
-  songs.fetch({
-    complete: function (model, results, valid, invalid) {
-      var r = {
+  return songs.fetch({
+    complete: function(model, results, valid, invalid) {
+      var r;
+      r = {
         ok: !!valid.length,
         song: results[0]
       };
-
-      res.send(JSON.stringify(r));
+      return res.send(JSON.stringify(r));
     }
   });
 };
 
-// GET /nowPlaying/
-exports.getNowPlaying = function (req, res) {
-  var nowPlaying = songs.nowPlaying();
-  res.send(JSON.stringify({ song: (nowPlaying ? nowPlaying.toJSON() : false) }));
+exports.getNowPlaying = function(req, res) {
+  var nowPlaying;
+  nowPlaying = songs.nowPlaying();
+  return res.send(JSON.stringify({
+    song: (nowPlaying ? nowPlaying.toJSON() : false)
+  }));
 };
