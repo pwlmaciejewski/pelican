@@ -1,34 +1,30 @@
-define(['backbone'], function (Backbone) {
-	return Backbone.Model.extend({
-		defaults: {
-			song: false
-		},
 
-		socket: null,
-
-		initialize: function (attrs, options) {
-			if (options.socket) {
-				this.socket = options.socket;
-				this.initializeSocket();
-			}
-		},
-
-		initializeSocket: function () {
-      this.socket.on('songChange', function (song) {
-        this.set('song', song);
-      }.bind(this));
+define(['backbone'], function(Backbone) {
+  return Backbone.Model.extend({
+    defaults: {
+      song: false
     },
-
-    next: function () {
-      this.socket.emit('songNext');
+    socket: null,
+    initialize: function(attrs, options) {
+      if (options.socket) {
+        this.socket = options.socket;
+        return this.initializeSocket();
+      }
     },
-
-		fetch: function () {
+    initializeSocket: function() {
+      var _this = this;
+      return this.socket.on('songChange', function(song) {
+        return _this.set('song', song);
+      });
+    },
+    next: function() {
+      return this.socket.emit('songNext');
+    },
+    fetch: function() {
       if (!this.socket) {
         return Backbone.Model.prototype.fetch.apply(this, arguments);
       }
-
-      this.socket.emit('whatsPlaying?');
+      return this.socket.emit('whatsPlaying?');
     }
-	});
+  });
 });

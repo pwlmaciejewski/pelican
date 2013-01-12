@@ -1,42 +1,35 @@
-define(['backbone', 'model/songThumb'], function (Backbone, SongThumb) {
+
+define(['backbone', 'model/songThumb'], function(Backbone, SongThumb) {
   return Backbone.Collection.extend({
     model: SongThumb,
-
     url: '/api/songs',
-
     socket: null,
-
-    initialize: function (attrs, options) {
+    initialize: function(attrs, options) {
       if (options.socket) {
-          this.socket = options.socket;
-          this.initializeSocket();            
+        this.socket = options.socket;
+        return this.initializeSocket();
       }
     },
-
-    initializeSocket: function () {
-      this.socket.on('add', function (model) {
-        this.add(model);
-      }.bind(this));
-
-      this.socket.on('remove', function (model) {
-        this.remove(model);
-      }.bind(this));
-
-      this.socket.on('reset', function (models) {
-        this.reset(models);  
-      }.bind(this));
-
-      this.socket.on('change', function (model) {
-        this.get(model.id).set(model);
-      }.bind(this));
+    initializeSocket: function() {
+      var _this = this;
+      this.socket.on('add', function(model) {
+        return _this.add(model);
+      });
+      this.socket.on('remove', function(model) {
+        return _this.remove(model);
+      });
+      this.socket.on('reset', function(models) {
+        return _this.reset(models);
+      });
+      return this.socket.on('change', function(model) {
+        return _this.get(model.id).set(model);
+      });
     },
-
-    fetch: function () {
+    fetch: function() {
       if (!this.socket) {
-          return Backbone.Collection.fetch.apply(this, arguments);
+        return Backbone.Collection.fetch.apply(this, arguments);
       }
-
-      this.socket.emit('fetch');
+      return this.socket.emit('fetch');
     }
   });
 });
