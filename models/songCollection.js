@@ -1,83 +1,68 @@
-var Backbone = require('backbone');
-var Song = require('./song.js');
-var async = require('async');
-var _ = require('underscore');
+var Backbone, Collection, Song, async, _;
 
-var Collection = Backbone.Collection.extend({ model: Song });
+Backbone = require('backbone');
+
+Song = require('./song.js');
+
+async = require('async');
+
+_ = require('underscore');
+
+Collection = Backbone.Collection.extend({
+  model: Song
+});
 
 module.exports = Backbone.Collection.extend({
   model: Song,
-
-  initialize: function () {
-    this.unfetchedModels = new Collection();
+  initialize: function() {
+    return this.unfetchedModels = new Collection();
   },
-
-  // Adding new, unfetched model don't trigger `add` event.
-  // Also, if model is unfetched it isn't added to models,
-  // it appears in `unfetchedModels`. 
-  add: function (models, options) {
+  add: function(models, options) {
+    var fetched, unfetched,
+      _this = this;
     models = _.isArray(models) ? models.slice() : [models];
-
-    // Fetched and unfetched models
-    var fetched = _(models).filter(function (model) {
-      model = model instanceof Backbone.Model ? model : new this.model(model);
+    fetched = _(models).filter(function(model) {
+      model = model instanceof Backbone.Model ? model : new _this.model(model);
       return !model.isFetched();
-    }, this);
-    var unfetched = _(models).difference(fetched);
-
+    });
+    unfetched = _(models).difference(fetched);
     this.unfetchedModels.add(fetched);
     return Backbone.Collection.prototype.add.call(this, unfetched, options);
   },
-
-  // Need to reset `this.unfetechedModels` by my self.
-  reset: function () {
+  reset: function() {
     this.unfetchedModels.reset();
-    return Backbone.Collection.prototype.reset.apply(this, arguments);
+    return Backbone.Collection.prototype.reset.call(this);
   },
-
-  // It fetches models from `unfetchedModels`.
-  fetch: function (options) {
+  fetch: function(options) {
+    var _this = this;
     options = options || {};
-    options.success = options.success || function () {};
-    options.error = options.error || function () {};
-    options.complete = options.complete || function () {};
-
-    // Fetch each unfetched song (in parallel)
-    async.parallel(this.unfetchedModels.map(function (song) {
-      return function (callback) {
-        song.fetch({
-          success: function (model, res) {
-            callback(null, model);
+    options.success = options.success || function() {};
+    options.error = options.error || function() {};
+    options.complete = options.complete || function() {};
+    return async.parallel(this.unfetchedModels.map(function(song) {
+      return function(callback) {
+        return song.fetch({
+          success: function(model, res) {
+            return callback(null, model);
           },
-          error: function (model, err) {
-            callback(err, model);
+          error: function(model, err) {
+            return callback(err, model);
           }
         });
       };
-    }, this), function (err, results) {
-      // Valid models
-      var valid = _(results).filter(function (model) {
+    }), function(err, results) {
+      var invalid, valid;
+      valid = _(results).filter(function(model) {
         return model.isFetched();
       });
-
-      // Invalid models
-      var invalid = _(results).difference(valid);
-
-      this.add(valid);
-
-      // Clear `unfetchedModels`
-      this.unfetchedModels.reset();
-
-      // Send error
+      invalid = _(results).difference(valid);
+      _this.add(valid);
+      _this.unfetchedModels.reset();
       if (err) {
-        options.error(this, invalid);
+        options.error(_this, invalid);
       }
-
-      // Send success
-      options.success(this, valid);
-
-      // Send complete
-      options.complete(this, results, valid, invalid);
-    }.bind(this));
+      options.success(_this, valid);
+      return options.complete(_this, results, valid, invalid);
+    });
   }
 });

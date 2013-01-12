@@ -1,63 +1,63 @@
-var Backbone = require('backbone');
-var request = require('request');
-var _ = require('underscore');
+var Backbone, Song, request, _,
+  _this = this;
 
-var Song = Backbone.Model.extend({
+Backbone = require('backbone');
+
+request = require('request');
+
+_ = require('underscore');
+
+Song = Backbone.Model.extend({
   defaults: {
     url: '',
     ytId: '',
     title: '',
     thumbnail: ''
   },
-
-  initialize: (function () {
-    var id = 0;
-    return function () {
-      this.set('id', id, { silent: true });
+  initialize: (function() {
+    var id;
+    id = 0;
+    return function() {
+      this.set('id', id, {
+        silent: true
+      });
       id += 1;
-
       if (!this.get('ytId')) {
-        this.set('ytId', Song.ytId(this.get('url')));      
+        return this.set('ytId', Song.ytId(this.get('url')));
       }
     };
   })(),
-
-  url: function () {
+  url: function() {
     return 'https://gdata.youtube.com/feeds/api/videos/' + this.get('ytId') + '?v=2&alt=json';
   },
-
-  parse: function (res) {
+  parse: function(res) {
     return {
       url: res.entry.link[0].href,
       title: res.entry.title.$t,
       thumbnail: res.entry.media$group.media$thumbnail[0].url
     };
   },
-
-  fetch: function (options) {
+  fetch: function(options) {
+    var _this = this;
     options = options ? _.clone(options) : {};
-    options.success = options.success || function () {};
-    options.error = options.error || function () {};
-    var model = this;
-
-    request({
+    options.success = options.success || function() {};
+    options.error = options.error || function() {};
+    return request({
       uri: this.url()
-    }, function (err, res, body) {
+    }, function(err, res, body) {
       if (res.statusCode !== 200) {
-        options.error(model);
+        options.error(_this);
         return;
       }
-
-      model.set(model.parse(JSON.parse(body)));
-      options.success(model);
+      _this.set(_this.parse(JSON.parse(body)));
+      return options.success(_this);
     });
   },
-
-  isFetched: function () {
+  isFetched: function() {
     return this.get('title') !== '';
   }
 }, {
-  ytId: function (url) {
+  ytId: function(url) {
     return url.match(/v=([^&]*)/)[1];
   }
 });

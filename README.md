@@ -23,3 +23,11 @@ More information: `pelican -h`
 ## Tests
 
 	npm test
+
+## Changelog
+
+__Next release__
+
+* More informative `pelican start` output
+* Couple of bug fixes
+* Models rewritten to coffeescript

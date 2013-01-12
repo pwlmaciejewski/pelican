@@ -1,37 +1,37 @@
-var Backbone = require('backbone');
-var SongCollection = require('./songCollection.js');
+var Backbone, Playlist, SongCollection;
 
-var Playlist = SongCollection.extend({
-	nowPlaying: function () {
-		if (this.length) {
-			return this.first();
-		} else {
-			return false;
-		}
-	},
+Backbone = require('backbone');
 
-	next: function () {
-		this.remove(this.first());
-		this.trigger('next', this.nowPlaying());
-		return this;
-	},
+SongCollection = require('./songCollection.js');
 
-	reset: function () {
-		var res = SongCollection.prototype.reset.apply(this, arguments);
-		this.trigger('next', this.nowPlaying());
-		return res;
-	},
-
-	add: function () {
-		var oldLength = this.length;
-		var res = SongCollection.prototype.add.apply(this, arguments);
-
-		if (oldLength === 0 && this.length > 0) {
-			this.trigger('next', this.nowPlaying());
-		}
-
-		return res;
-	}
+Playlist = SongCollection.extend({
+  nowPlaying: function() {
+    if (this.length) {
+      return this.first();
+    } else {
+      return false;
+    }
+  },
+  next: function() {
+    this.remove(this.first());
+    this.trigger('next', this.nowPlaying());
+    return this;
+  },
+  reset: function() {
+    var res;
+    res = SongCollection.prototype.reset.call(this);
+    this.trigger('next', this.nowPlaying());
+    return res;
+  },
+  add: function(models, options) {
+    var oldLength, res;
+    oldLength = this.length;
+    res = SongCollection.prototype.add.call(this, models, options);
+    if (oldLength === 0 && this.length > 0) {
+      this.trigger('next', this.nowPlaying());
+    }
+    return res;
+  }
 });
 
 module.exports = Playlist;
