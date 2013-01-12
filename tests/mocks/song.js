@@ -1,9 +1,12 @@
-var sandbox = require('sandboxed-module');
-var Backbone = require('backbone');
+var Backbone, sandbox;
+
+sandbox = require('sandboxed-module');
+
+Backbone = require('backbone');
 
 module.exports = sandbox.require('../../models/song.js', {
-  requires: { 
-    request:  require('../mocks/request.js'),
+  requires: {
+    request: require('../mocks/request.js'),
     backbone: Backbone
   }
 });

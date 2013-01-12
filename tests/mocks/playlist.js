@@ -1,6 +1,10 @@
-var sandbox = require('sandboxed-module');
-var SongCollection = require('./song.js');
-var Backbone = require('backbone');
+var Backbone, SongCollection, sandbox;
+
+sandbox = require('sandboxed-module');
+
+SongCollection = require('./song.js');
+
+Backbone = require('backbone');
 
 module.exports = sandbox.require('../../models/playlist.js', {
   requires: {

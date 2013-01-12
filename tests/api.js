@@ -1,76 +1,94 @@
-var sandbox = require('sandboxed-module');
-var api = sandbox.require('../routes/api.js', {
+var api, sandbox;
+
+sandbox = require('sandboxed-module');
+
+api = sandbox.require('../routes/api.js', {
   requires: {
     '../models/playlist.js': require('./mocks/playlist.js')
-  } 
+  }
 });
 
 module.exports = {
-  setUp: function (callback) {
+  setUp: function(callback) {
     api.songs.reset();
-    callback();
+    return callback();
   },
-
-  postSong: function (test) {
-    var req = { body: { url: 'https://www.youtube.com/watch?v=8ZcmTl_1ER8' } };
-
-    api.postSong(req, {
-      send: function (txt) {
-        var json = JSON.parse(txt);
+  postSong: function(test) {
+    var req;
+    req = {
+      body: {
+        url: 'https://www.youtube.com/watch?v=8ZcmTl_1ER8'
+      }
+    };
+    return api.postSong(req, {
+      send: function(txt) {
+        var json;
+        json = JSON.parse(txt);
         test.ok(json.ok);
         test.equal(api.songs.length, 1);
         test.equal(json.song.title, 'Epic sax guy 10 hours');
-        test.done();
+        return test.done();
       }
     });
   },
-
-  postInvalidSong: function (test) {
-    var req = { body: { url: 'http://youtube.com/watch?v=xxx' } };
-    api.postSong(req, {
-      send: function (txt) {
-        var json = JSON.parse(txt);
+  postInvalidSong: function(test) {
+    var req;
+    req = {
+      body: {
+        url: 'http://youtube.com/watch?v=xxx'
+      }
+    };
+    return api.postSong(req, {
+      send: function(txt) {
+        var json;
+        json = JSON.parse(txt);
         test.ok(!json.ok);
         test.equal(api.songs.length, 0, 'Songs should not be added into collection');
-        test.done();
+        return test.done();
       }
     });
   },
-
   getNowPlaying: {
-    emptyQueue: function (test) {
-      api.getNowPlaying({}, {
-        send: function (txt) {
-          var json = JSON.parse(txt);
+    emptyQueue: function(test) {
+      return api.getNowPlaying({}, {
+        send: function(txt) {
+          var json;
+          json = JSON.parse(txt);
           test.equal(json.song, false, 'Now playing for empty queue should be "false"');
-          test.done();
+          return test.done();
         }
       });
     },
-
-    playing: function (test) {
-      api.songs.add({ ytId: '8ZcmTl_1ER8' });
-      api.songs.add({ ytId: 'WYGFNjEL7Jw' });
-      api.songs.fetch({
-        complete: function () {
-          api.getNowPlaying({}, {
-            send: function (txt) {
-              var json = JSON.parse(txt);
+    playing: function(test) {
+      api.songs.add({
+        ytId: '8ZcmTl_1ER8'
+      });
+      api.songs.add({
+        ytId: 'WYGFNjEL7Jw'
+      });
+      return api.songs.fetch({
+        complete: function() {
+          return api.getNowPlaying({}, {
+            send: function(txt) {
+              var json;
+              json = JSON.parse(txt);
               test.equal(json.song.ytId, '8ZcmTl_1ER8');
-              test.done();
+              return test.done();
             }
           });
         }
       });
     },
-
-    uninitializedSong: function (test) {
-      api.songs.add({ ytId: '8ZcmTl_1ER8' });
-      api.getNowPlaying({}, {
-        send: function (txt) {
-          var json = JSON.parse(txt);
+    uninitializedSong: function(test) {
+      api.songs.add({
+        ytId: '8ZcmTl_1ER8'
+      });
+      return api.getNowPlaying({}, {
+        send: function(txt) {
+          var json;
+          json = JSON.parse(txt);
           test.ok(!json.song, 'There should not be actually playing song');
-          test.done();
+          return test.done();
         }
       });
     }
