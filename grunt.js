@@ -21,7 +21,10 @@ module.exports = function(grunt) {
           'public/javascripts/src/view/**/*.coffee',
           'tests/api.coffee',
           'tests/models/**/*.coffee',
-          'tests/mocks/**/*.coffee'
+          'tests/mocks/**/*.coffee',
+          'app.coffee',
+          'server.coffee',
+          'socket.coffee'
         ],
         dest: '<%= grunt.task.current.target %>'
       }
@@ -35,7 +38,10 @@ module.exports = function(grunt) {
       clientView: 'public/javascripts/src/view/**/*.js',
       testApi: 'tests/api.js',
       testModels: 'tests/models/**/*.js',
-      testMocks: 'tests/mocks/*.js'
+      testMocks: 'tests/mocks/*.js',
+      app: 'app.js',
+      server: 'server.js',
+      socket: 'socket.js'
     }
   });
 

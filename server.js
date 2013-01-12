@@ -1,12 +1,15 @@
-var http = require('http');
-var app = require('./app.js');
-var socket = require('./socket.js');
+var app, http, io, server, socket;
 
-// Run HTTP server
-var server = http.createServer(app).listen(app.get('port'), function () {
-  console.log("Express server listening on port " + app.get('port'));
+http = require('http');
+
+app = require('./app.js');
+
+socket = require('./socket.js');
+
+server = http.createServer(app).listen(app.get('port'), function() {
+  return console.log("Express server listening on port " + app.get('port'));
 });
 
-// Run WS server
-var io = require('socket.io').listen(server);
+io = require('socket.io').listen(server);
+
 socket(io, app.get('songs'));

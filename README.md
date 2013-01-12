@@ -30,4 +30,4 @@ __Next release__
 
 * More informative `pelican start` output
 * Couple of bug fixes
-* Models, routes and client-size scripts rewritten to coffeescript
+* Project rewritten in coffeescript
