@@ -1,58 +1,48 @@
-define(['backbone', 'mustache', 'text!/templates/player.tmpl', 'plugin/jquery.tubeplayer'], function (Backbone, Mustache, tmpl) {
-	return Backbone.View.extend({
-    initialize: function (options) {
+
+define(['backbone', 'mustache', 'text!/templates/player.tmpl', 'plugin/jquery.tubeplayer'], function(Backbone, Mustache, tmpl) {
+  return Backbone.View.extend({
+    initialize: function(options) {
+      var _this = this;
       this.ready = false;
-
-      // When player is initialized
-      $.tubeplayer.defaults.afterReady = function () {
-        this.$yt.hide();
-        this.ready = true;
-        this.trigger('ready');
-      }.bind(this);
-
-      // Song change
-      this.model.on('change:song', function (song) {
-        this.render();
-      }, this);
+      $.tubeplayer.defaults.afterReady = function() {
+        _this.$yt.hide();
+        _this.ready = true;
+        return _this.trigger('ready');
+      };
+      return this.model.on('change:song', function(song) {
+        return _this.render();
+      });
     },
-
-    end: function () {
-      this.model.next();
+    end: function() {
+      return this.model.next();
     },
-
-    error: function () {
-      this.model.next();
+    error: function() {
+      return this.model.next();
     },
-
-    update: function () {
-      var song = this.model.get('song');
-      var title = this.$el.find('.title');
-
+    update: function() {
+      var song, title;
+      song = this.model.get('song');
+      title = this.$el.find('.title');
       if (song) {
         this.$yt.show();
         this.$yt.tubeplayer('play', song.ytId);
-        title.html(song.title);
+        return title.html(song.title);
       } else {
         this.$yt.tubeplayer('stop');
         this.$yt.hide();
-        title.html('');
+        return title.html('');
       }
     },
-
-    // YouTube player node
     $yt: null,
-
-    render: function () {
-      // If view is renered, update it
+    render: function() {
       if (this.ready) {
         this.update();
         return;
       }
       this.ready = true;
-
       this.$el.html(Mustache.render(tmpl, {}));
       this.$yt = this.$el.find('.yt');
-      this.$yt.tubeplayer({
+      return this.$yt.tubeplayer({
         allowFullscreen: true,
         iframed: true,
         width: 860,
@@ -63,5 +53,5 @@ define(['backbone', 'mustache', 'text!/templates/player.tmpl', 'plugin/jquery.tu
         onErrorNotEmbeddable: this.error.bind(this)
       });
     }
-	});
+  });
 });

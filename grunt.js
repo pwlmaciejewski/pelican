@@ -17,7 +17,8 @@ module.exports = function(grunt) {
           'models/**/*.coffee', 
           'routes/**/*.coffee', 
           'public/javascripts/src/init/**/*.coffee',
-          'public/javascripts/src/model/**/*.coffee'
+          'public/javascripts/src/model/**/*.coffee',
+          'public/javascripts/src/view/**/*.coffee'
         ],
         dest: '<%= grunt.task.current.target %>'
       }
@@ -27,7 +28,8 @@ module.exports = function(grunt) {
       models: 'models/**/*.js',
       routes: 'routes/**/*.js',
       clientInit: 'public/javascripts/src/init/**/*.js',
-      clientModel: 'public/javascripts/src/model/**/*.js'
+      clientModel: 'public/javascripts/src/model/**/*.js',
+      clientView: 'public/javascripts/src/view/**/*.js'
     }
   });
 

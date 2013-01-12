@@ -18,7 +18,5 @@ define ['backbone'], (Backbone) ->
       @socket.emit 'songNext'
 
 		fetch: ->
-      unless this.socket
-        return Backbone.Model.prototype.fetch.apply @, arguments 
-
+      unless this.socket then return Backbone.Model.prototype.fetch.apply @, arguments 
       @socket.emit 'whatsPlaying?'
