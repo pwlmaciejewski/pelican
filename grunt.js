@@ -13,14 +13,15 @@ module.exports = function(grunt) {
 
     coffee: {
       all: {
-        src: ['models/**/*.coffee', 'routes/**/*.coffee'],
+        src: ['models/**/*.coffee', 'routes/**/*.coffee', 'public/javascripts/src/init/**/*.coffee'],
         dest: '<%= grunt.task.current.target %>'
       }
     },
 
     rm: {
       models: 'models/**/*.js',
-      routes: 'routes/**/*.js'
+      routes: 'routes/**/*.js',
+      publicInit: 'public/javascripts/src/init/**/*.js'
     }
   });
 
