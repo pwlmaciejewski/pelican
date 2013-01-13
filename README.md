@@ -26,7 +26,7 @@ More information: `pelican -h`
 
 ## Changelog
 
-__Next release__
+**0.0.12** *2013-01-13* 
 
 * More informative `pelican start` output
 * Couple of bug fixes
