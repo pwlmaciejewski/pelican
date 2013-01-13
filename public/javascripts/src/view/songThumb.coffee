@@ -8,6 +8,6 @@ define [
 			@model.on 'change', =>
 				@render()
 
-		render: =>
+		render: ->
 			@$el.html Mustache.render(template, @model.toJSON())
 			@

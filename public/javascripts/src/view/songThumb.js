@@ -1,6 +1,5 @@
 
 define(['backbone', 'mustache', 'text!/templates/songThumb.tmpl'], function(Backbone, Mustache, template) {
-  var _this = this;
   return Backbone.View.extend({
     initialize: function() {
       var _this = this;
@@ -9,8 +8,8 @@ define(['backbone', 'mustache', 'text!/templates/songThumb.tmpl'], function(Back
       });
     },
     render: function() {
-      _this.$el.html(Mustache.render(template, _this.model.toJSON()));
-      return _this;
+      this.$el.html(Mustache.render(template, this.model.toJSON()));
+      return this;
     }
   });
 });
