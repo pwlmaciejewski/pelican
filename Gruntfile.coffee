@@ -28,6 +28,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-clean'
   grunt.loadNpmTasks 'grunt-contrib-watch'
+  grunt.loadNpmTasks 'grunt-buster'
 
   grunt.registerTask 'coffeeReset', ['clean', 'coffee']
   grunt.registerTask 'default', ['coffeeReset', 'buster']
