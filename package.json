@@ -11,8 +11,8 @@
     "pelican": "bin/pelican.js"
   },
   "scripts": {
-    "start": "node node_modules/supervisor/lib/cli-wrapper.js server.js",
-    "test": "node tests/test.js"
+    "start": "node node_modules/supervisor/lib/cli-wrapper.js lib/webServer.js",
+    "test": "node test/test.js"
   },
   "dependencies": {
     "express": "3.0.0rc3",
@@ -25,14 +25,17 @@
     "optimist": "~0.3.4",
     "request": "~2.11.0",
     "forever": "~0.10.0",
-    "cli-color": "~0.2.1",
-    "grunt-coffee": "0.0.6",
-    "grunt-rm": "0.0.4"
+    "cli-color": "~0.2.1"
   },
   "devDependencies": {
-    "nodeunit": "~0.7.4",
-    "jshint": "~0.8.0",
     "sandboxed-module": "~0.1.3",
-    "supervisor": "~0.4.1"
+    "supervisor": "~0.4.1",
+    "grunt": "~0.4.1",
+    "grunt-contrib-clean": "~0.4.1",
+    "grunt-contrib-coffee": "~0.7.0",
+    "grunt-buster": "~0.1.2",
+    "grunt-contrib-watch": "~0.3.1",
+    "supertest": "~0.6.0",
+    "sinon": "~1.6.0"
   }
 }

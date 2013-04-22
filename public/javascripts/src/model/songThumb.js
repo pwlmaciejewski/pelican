@@ -1,10 +1,12 @@
-
-define(['backbone'], function(Backbone) {
-  return Backbone.Model.extend({
-    defaults: {
-      url: '',
-      thumbnail: '',
-      title: ''
-    }
+(function() {
+  define(['backbone'], function(Backbone) {
+    return Backbone.Model.extend({
+      defaults: {
+        url: '',
+        thumbnail: '',
+        title: ''
+      }
+    });
   });
-});
+
+}).call(this);

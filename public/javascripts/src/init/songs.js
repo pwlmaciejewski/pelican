@@ -1,13 +1,16 @@
+(function() {
+  define(['jquery', 'model/songThumbCollection', 'view/songThumbCollection', 'socketio'], function($, SongsModel, SongsView, io) {
+    var model, view;
 
-define(['jquery', 'model/songThumbCollection', 'view/songThumbCollection', 'socketio'], function($, SongsModel, SongsView, io) {
-  var model, view;
-  model = new SongsModel([], {
-    socket: io.connect()
+    model = new SongsModel([], {
+      socket: io.connect()
+    });
+    view = new SongsView({
+      el: $('.playlist .songs'),
+      collection: model
+    });
+    view.render();
+    return model.fetch();
   });
-  view = new SongsView({
-    el: $('.playlist .songs'),
-    collection: model
-  });
-  view.render();
-  return model.fetch();
-});
+
+}).call(this);
